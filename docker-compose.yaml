@@ -3,10 +3,9 @@ services:
     image: haproxy:latest
     container_name: haproxy
     ports:
-      - "81:80"
-      - "82:443"
-      - "5433:5432"
-      # - "443:443"
+      - "80:80"
+      - "443:443"
+      - "5432:5432"
     env_file:
       - env
     volumes:
