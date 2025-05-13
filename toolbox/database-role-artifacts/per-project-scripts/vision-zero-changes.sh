@@ -42,7 +42,6 @@ REVOKE CONNECT ON DATABASE
 moped, moped_staging, 
 vision_zero, vision_zero_staging, 
 postgrest_bond_reporting, 
-postgrest_ctr_data_lake, 
 postgrest_knack_services, 
 postgrest_legacy_scripts, 
 postgrest_parking, 
