@@ -361,6 +361,31 @@ WHERE member_role.rolname not in (
 ORDER BY role.rolname, member_role.rolname; "
 
 
+# H/T to @johnclary for this following query, which shows various permissions
+# at the table level for the roles in the database.
+
+SELECT 
+    r.rolname AS role_name,
+    'crashes' AS table_name,
+    has_database_privilege(r.rolname, current_database(), 'CONNECT') AS has_db_connect,
+    has_database_privilege(r.rolname, current_database(), 'CREATE') AS has_db_create, 
+    has_database_privilege(r.rolname, current_database(), 'TEMPORARY') AS has_db_temp,
+    has_table_privilege(r.rolname, 'crashes', 'SELECT') AS has_select,
+    has_table_privilege(r.rolname, 'crashes', 'INSERT') AS has_insert,
+    has_table_privilege(r.rolname, 'crashes', 'UPDATE') AS has_update,
+    has_table_privilege(r.rolname, 'crashes', 'DELETE') AS has_delete,
+    has_table_privilege(r.rolname, 'crashes', 'TRUNCATE') AS has_truncate,
+    has_table_privilege(r.rolname, 'crashes', 'REFERENCES') AS has_references,
+    has_table_privilege(r.rolname, 'crashes', 'TRIGGER') AS has_trigger
+FROM 
+    pg_roles r
+WHERE 
+    r.rolcanlogin = true OR r.rolname IN (
+        SELECT rolname FROM pg_roles WHERE rolcanlogin = false AND NOT rolname LIKE 'pg_%' AND NOT rolname LIKE 'rds%'
+    )
+ORDER BY 
+    r.rolname;
+
 
 # Hands on testing
 
