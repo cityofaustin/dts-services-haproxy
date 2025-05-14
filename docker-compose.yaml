@@ -1,6 +1,6 @@
 services:
   haproxy:
-    image: haproxy:latest
+    image: haproxy:lts
     container_name: haproxy
     ports:
       - "80:80"
