@@ -194,6 +194,11 @@ docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 p
 # ACT 3:
 # The permissions shuffle
 
+# Delete the role `ctr_user`
+docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -c "DROP ROLE IF EXISTS ctr_user;"
+
+
+
 # Set up a moped readers role and grant it to the mmc_gateway role
 # and also remove the explicit permissions from mmc_gateway since it has 
 # a role group to live in now. This let's us easily add new moped RR users in the future
@@ -206,7 +211,7 @@ docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 p
 docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -c "REVOKE read_write FROM developers;"
 docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -c "GRANT read_only TO developers;"
 
-# revoke connect from everyone (does not invalidate existing connections, h/t @mddilley for that great question)
+# revoke connect from everyone (does not invalidate existing connections, h/t @mdilley for that great question)
 # NB, there is a mystery, seemingly ghost role, `PUBLIC` which means "the default." That had me chasing my tail for a while.
 docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -c "\
 REVOKE CONNECT ON DATABASE 

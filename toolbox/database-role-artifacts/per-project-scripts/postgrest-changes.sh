@@ -84,6 +84,9 @@ docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 p
 docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -d postgrest_road_conditions -c "ALTER DEFAULT PRIVILEGES IN SCHEMA api, public GRANT ALL PRIVILEGES ON SEQUENCES TO read_write;"
 docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -d postgrest_road_conditions -c "ALTER DEFAULT PRIVILEGES IN SCHEMA api, public GRANT EXECUTE ON FUNCTIONS TO read_write;"
 
+# Delete the role `ctr_user`
+docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -c "DROP ROLE IF EXISTS ctr_user;"
+
 docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -c "\
 REVOKE CONNECT ON DATABASE 
 moped, moped_staging, 
