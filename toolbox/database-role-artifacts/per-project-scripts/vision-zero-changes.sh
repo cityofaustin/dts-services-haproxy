@@ -54,5 +54,7 @@ vision_zero_readers;"
 
 
 # grant connect to RR groups
-docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -c "GRANT CONNECT ON DATABASE moped, moped_staging TO moped_readers;"
 docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -c "GRANT CONNECT ON DATABASE vision_zero, vision_zero_staging TO vision_zero_readers;"
+
+docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -c "GRANT CONNECT ON DATABASE vision_zero, vision_zero_staging TO vision_zero_app;"
+docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -c "ALTER ROLE vision_zero_app RENAME TO vision_zero_admin;"

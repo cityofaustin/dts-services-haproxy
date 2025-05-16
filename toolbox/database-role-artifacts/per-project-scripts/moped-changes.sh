@@ -58,7 +58,9 @@ postgrest_road_conditions
 FROM mmc_gateway,
 moped_app;"
 
+docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -c "GRANT CONNECT ON DATABASE moped, moped_staging TO moped_readers;"
 
 # grant connect to app groups
-docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -c "GRANT CONNECT ON DATABASE vision_zero, vision_zero_staging TO vision_zero_app;"
 docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -c "GRANT CONNECT ON DATABASE moped, moped_staging TO moped_app;"
+
+docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -c "ALTER ROLE moped_app RENAME TO moped_admin;"

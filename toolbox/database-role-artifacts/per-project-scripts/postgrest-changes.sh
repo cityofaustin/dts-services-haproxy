@@ -126,3 +126,5 @@ docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 p
 docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -c "GRANT postgrest_web_anon TO postgrest_app;"
 docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -c "GRANT api_user TO postgrest_app;"
 docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -c "GRANT atd_user TO postgrest_app;"
+
+docker run --rm -it --env-file ./credentials_for_throw_away_server postgres:16 psql -c "ALTER ROLE postgrest_app RENAME TO postgrest_admin;"
