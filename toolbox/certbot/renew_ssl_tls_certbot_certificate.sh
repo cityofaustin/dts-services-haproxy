@@ -70,8 +70,8 @@ AWS_SECRET_ACCESS_KEY=$(docker run --rm --name op \
 docker pull certbot/dns-route53:v4.0.0
 
 CERTBOT_OUTPUT=$(docker run --rm --name certbot \
--e AWS_ACCESS_KEY_ID=$(echo $AWS_ACCESS_KEY_ID | tr -d '\r' ) \
--e AWS_SECRET_ACCESS_KEY=$(echo $AWS_SECRET_ACCESS_KEY | tr -d '\r' ) \
+-e AWS_ACCESS_KEY_ID=$(echo "$AWS_ACCESS_KEY_ID" | tr -d '\r' ) \
+-e AWS_SECRET_ACCESS_KEY=$(echo "$AWS_SECRET_ACCESS_KEY" | tr -d '\r' ) \
 -v "/etc/letsencrypt:/etc/letsencrypt" \
 -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
 certbot/dns-route53 certonly -n --agree-tos --dns-route53 -d $DOMAIN 2>&1)
