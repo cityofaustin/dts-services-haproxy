@@ -41,7 +41,7 @@ AWS_SECRET_ACCESS_KEY=$(docker run --rm --name op \
 # Now, remove the old concatenated certificates, renew the certificate, and replace with the new concatenated certificates
 CERT_PATH="$TARGET_LOCATION"
 cd $CERT_PATH
-rm $DOMAIN.pem
+rm -f "$DOMAIN.pem"
 
 docker pull certbot/dns-route53:v4.0.0
 
