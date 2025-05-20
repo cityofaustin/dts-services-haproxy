@@ -75,3 +75,8 @@ cat /etc/letsencrypt/live/$DOMAIN/cert.pem > $TARGET_LOCATION/$DOMAIN.pem
 cat /etc/letsencrypt/live/$DOMAIN/privkey.pem >> $TARGET_LOCATION/$DOMAIN.pem
 
 chmod a+r $TARGET_LOCATION/$DOMAIN.pem
+
+if [[ -n "$CONTAINER" ]]; then
+  echo "Restarting Docker container: $CONTAINER"
+  docker restart "$CONTAINER"
+fi
