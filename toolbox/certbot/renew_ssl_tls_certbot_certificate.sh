@@ -47,7 +47,11 @@ echo "Renewing certificate for $DOMAIN"
 export TARGET_LOCATION
 
 # Load onepassword environment variables
-export $(grep -v '^[[:space:]]*#' env | xargs)
+if [[ ! -f "./env" ]]; then
+  echo "Error: Environment file './env' not found. Please ensure it exists in the current directory." >&2
+  exit 1
+fi
+export $(grep -v '^[[:space:]]*#' ./env | xargs)
 
 # Pull op v2 
 docker pull 1password/op:2
