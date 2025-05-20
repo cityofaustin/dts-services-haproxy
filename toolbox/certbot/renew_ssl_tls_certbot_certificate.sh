@@ -2,7 +2,6 @@
 
 # exit on error
 set -euo pipefail
-IFS=$'\n\t'
 
 # Parse arguments
 while [[ "$#" -gt 0 ]]; do
