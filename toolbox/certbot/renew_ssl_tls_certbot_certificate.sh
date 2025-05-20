@@ -5,11 +5,11 @@ set -euo pipefail
 
 print_help() {
   cat <<EOF
-Usage: $0 -d <domain> -t <target_location> [-c <container_name>]
+Usage: $0 -d <domain> [-t <target_location>] [-c <container_name>]
 
 Options:
   -d, --domain            The domain name for which to renew the certificate (required)
-  -t, --target_location   The directory where the concatenated certificate will be stored (required)
+  -t, --target_location   (Optional) The directory where the concatenated certificate will be stored
   -c, --container         (Optional) Docker container name to restart after renewal
   -h, --help              Show this help message and exit
 
@@ -26,6 +26,7 @@ fi
 
 # Parse arguments
 CONTAINER=""
+TARGET_LOCATION=""
 while [[ "$#" -gt 0 ]]; do
   case $1 in
     -d|--domain) DOMAIN="$2"; shift ;;
@@ -37,7 +38,7 @@ while [[ "$#" -gt 0 ]]; do
   shift
 done
 
-if [[ -z "${DOMAIN:-}" || -z "${TARGET_LOCATION:-}" ]]; then
+if [[ -z "${DOMAIN:-}" ]]; then
   print_help
   exit 1
 fi
@@ -62,11 +63,6 @@ AWS_SECRET_ACCESS_KEY=$(docker run --rm --name op \
 -e OP_CONNECT_TOKEN=$OP_API_TOKEN \
 1password/op:2 op read op://$OP_VAULT_ID/Certbot\ IAM\ Access\ Key\ and\ Secret/accessSecret)
 
-# Now, remove the old concatenated certificates, renew the certificate, and replace with the new concatenated certificates
-CERT_PATH="$TARGET_LOCATION"
-cd $CERT_PATH
-rm -f "$DOMAIN.pem"
-
 docker pull certbot/dns-route53:v4.0.0
 
 CERTBOT_OUTPUT=$(docker run --rm --name certbot \
@@ -78,14 +74,20 @@ certbot/dns-route53 certonly -n --agree-tos --dns-route53 -d $DOMAIN 2>&1)
 
 if echo "$CERTBOT_OUTPUT" | grep -q "Certificate not yet due for renewal; no action taken."; then
   echo "Certificate not yet due for renewal; exiting script."
-  # exit 1 here so we can queue this up with && docker compose restart ... after it
   exit 1
+fi
+
+# If TARGET_LOCATION is not set, exit after renewal
+if [[ -z "${TARGET_LOCATION}" ]]; then
+  echo "No target location specified, renewal complete. Exiting without modifying files outside /etc."
+  exit 0
 fi
 
 echo "Certificate renewed successfully, concatenating to $TARGET_LOCATION/$DOMAIN.pem"
 
-cat /etc/letsencrypt/live/$DOMAIN/cert.pem > $TARGET_LOCATION/$DOMAIN.pem
+rm -f "$TARGET_LOCATION/$DOMAIN.pem"
 
+cat /etc/letsencrypt/live/$DOMAIN/cert.pem > $TARGET_LOCATION/$DOMAIN.pem
 cat /etc/letsencrypt/live/$DOMAIN/privkey.pem >> $TARGET_LOCATION/$DOMAIN.pem
 
 chmod a+r $TARGET_LOCATION/$DOMAIN.pem
