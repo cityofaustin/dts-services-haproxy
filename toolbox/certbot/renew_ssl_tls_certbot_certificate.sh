@@ -51,12 +51,22 @@ rm -f "$DOMAIN.pem"
 
 docker pull certbot/dns-route53:v4.0.0
 
-docker run --rm --name certbot \
+CERTBOT_OUTPUT=$(docker run --rm --name certbot \
 -e AWS_ACCESS_KEY_ID=$(echo $AWS_ACCESS_KEY_ID | tr -d '\r' ) \
 -e AWS_SECRET_ACCESS_KEY=$(echo $AWS_SECRET_ACCESS_KEY | tr -d '\r' ) \
 -v "/etc/letsencrypt:/etc/letsencrypt" \
 -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
-certbot/dns-route53 certonly -n --agree-tos --dns-route53 -d $DOMAIN
+certbot/dns-route53 certonly -n --agree-tos --dns-route53 -d $DOMAIN 2>&1)
+
+echo "$CERTBOT_OUTPUT"
+
+if echo "$CERTBOT_OUTPUT" | grep -q "Certificate not yet due for renewal; no action taken."; then
+  echo "Certificate not yet due for renewal; exiting script."
+  # exit 1 here so we can queue this up with && docker compose restart ... after it
+  exit 1
+fi
+
+echo "Certificate renewed successfully, concatenating to $TARGET_LOCATION/$DOMAIN.pem"
 
 cat /etc/letsencrypt/live/$DOMAIN/cert.pem > $TARGET_LOCATION/$DOMAIN.pem
 
