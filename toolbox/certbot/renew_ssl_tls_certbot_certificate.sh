@@ -3,6 +3,21 @@
 # exit on error
 set -euo pipefail
 
+print_help() {
+  cat <<EOF
+Usage: $0 -d <domain> -t <target_location> [-c <container_name>]
+
+Options:
+  -d, --domain            The domain name for which to renew the certificate (required)
+  -t, --target_location   The directory where the concatenated certificate will be stored (required)
+  -c, --container         (Optional) Docker container name to restart after renewal
+  -h, --help              Show this help message and exit
+
+This script renews a Let's Encrypt certificate for the specified domain using certbot with the Route53 DNS plugin,
+retrieves AWS credentials from 1Password, and optionally restarts a Docker container after renewal.
+EOF
+}
+
 # Ensure script is run as root
 if [[ "$EUID" -ne 0 ]]; then
   echo "This script must be run as root." >&2
@@ -16,13 +31,14 @@ while [[ "$#" -gt 0 ]]; do
     -d|--domain) DOMAIN="$2"; shift ;;
     -t|--target_location) TARGET_LOCATION="$2"; shift ;;
     -c|--container) CONTAINER="$2"; shift ;;
-    *) echo "Unknown parameter passed: $1"; exit 1 ;;
+    -h|--help) print_help; exit 0 ;;
+    *) echo "Unknown parameter passed: $1"; print_help; exit 1 ;;
   esac
   shift
 done
 
-if [[ -z "$DOMAIN" || -z "$TARGET_LOCATION" ]]; then
-  echo "Usage: $0 -d <domain> -t <target_location> [-c <container_name>]"
+if [[ -z "${DOMAIN:-}" || -z "${TARGET_LOCATION:-}" ]]; then
+  print_help
   exit 1
 fi
 
@@ -59,8 +75,6 @@ CERTBOT_OUTPUT=$(docker run --rm --name certbot \
 -v "/etc/letsencrypt:/etc/letsencrypt" \
 -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
 certbot/dns-route53 certonly -n --agree-tos --dns-route53 -d $DOMAIN 2>&1)
-
-echo "$CERTBOT_OUTPUT"
 
 if echo "$CERTBOT_OUTPUT" | grep -q "Certificate not yet due for renewal; no action taken."; then
   echo "Certificate not yet due for renewal; exiting script."
