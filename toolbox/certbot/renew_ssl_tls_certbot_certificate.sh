@@ -50,7 +50,7 @@ docker run --rm --name certbot \
 -e AWS_SECRET_ACCESS_KEY=$(echo $AWS_SECRET_ACCESS_KEY | tr -d '\r' ) \
 -v "/etc/letsencrypt:/etc/letsencrypt" \
 -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
-certbot/dns-route53 certonly -n --dns-route53 -d $DOMAIN
+certbot/dns-route53 certonly -n --agree-tos --dns-route53 -d $DOMAIN
 
 cat /etc/letsencrypt/live/$DOMAIN/cert.pem > $TARGET_LOCATION/$DOMAIN.pem
 
