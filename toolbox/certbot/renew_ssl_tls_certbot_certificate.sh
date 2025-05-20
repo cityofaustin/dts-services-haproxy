@@ -10,17 +10,19 @@ if [[ "$EUID" -ne 0 ]]; then
 fi
 
 # Parse arguments
+CONTAINER=""
 while [[ "$#" -gt 0 ]]; do
   case $1 in
     -d|--domain) DOMAIN="$2"; shift ;;
     -t|--target_location) TARGET_LOCATION="$2"; shift ;;
+    -c|--container) CONTAINER="$2"; shift ;;
     *) echo "Unknown parameter passed: $1"; exit 1 ;;
   esac
   shift
 done
 
 if [[ -z "$DOMAIN" || -z "$TARGET_LOCATION" ]]; then
-  echo "Usage: $0 -d <domain> -t <target_location>"
+  echo "Usage: $0 -d <domain> -t <target_location> [-c <container_name>]"
   exit 1
 fi
 
