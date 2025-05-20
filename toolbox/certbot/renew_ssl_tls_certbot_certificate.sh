@@ -21,8 +21,8 @@ fi
 echo "Renewing certificate for $DOMAIN"
 export TARGET_LOCATION
 
-# # Load onepassword environment variables
-source .env
+# Load onepassword environment variables
+export $(grep -v '^[[:space:]]*#' env | xargs)
 
 # Pull op v2 
 docker pull 1password/op:2
