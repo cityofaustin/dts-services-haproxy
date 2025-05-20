@@ -3,6 +3,12 @@
 # exit on error
 set -euo pipefail
 
+# Ensure script is run as root
+if [[ "$EUID" -ne 0 ]]; then
+  echo "This script must be run as root." >&2
+  exit 1
+fi
+
 # Parse arguments
 while [[ "$#" -gt 0 ]]; do
   case $1 in
