@@ -5,10 +5,10 @@ set -euo pipefail
 
 print_help() {
   cat <<EOF
-Usage: $0 -d <domain> [-t <target_location>] [-c <container_name>]
+Usage: $0 -d <fully qualified domain> [-t <target_location>] [-c <container_name>]
 
 Options:
-  -d, --domain            The domain name for which to renew the certificate (required)
+  -d, --domain            The fully qualified domain name for which to renew the certificate (required)
   -t, --target_location   (Optional) The directory where the concatenated certificate will be stored
   -c, --container         (Optional) Docker container name to restart after renewal
   -h, --help              Show this help message and exit
