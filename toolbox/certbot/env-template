@@ -1,3 +1,5 @@
+# In production on bastion: 1pw "1Password Connect Token for Bastion Services"
+# In development, use your own 1PW token
 OP_API_TOKEN=
 OP_CONNECT=
 OP_VAULT_ID=
