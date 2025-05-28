@@ -91,7 +91,7 @@ echo "Certificate renewed successfully, concatenating to $TARGET_LOCATION/$DOMAI
 
 rm -f "$TARGET_LOCATION/$DOMAIN.pem"
 
-cat /etc/letsencrypt/live/$DOMAIN/cert.pem > $TARGET_LOCATION/$DOMAIN.pem
+cat /etc/letsencrypt/live/$DOMAIN/fullchain.pem > $TARGET_LOCATION/$DOMAIN.pem
 cat /etc/letsencrypt/live/$DOMAIN/privkey.pem >> $TARGET_LOCATION/$DOMAIN.pem
 
 chmod a+r $TARGET_LOCATION/$DOMAIN.pem
