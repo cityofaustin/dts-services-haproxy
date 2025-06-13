@@ -51,7 +51,6 @@ This repository contains the configuration and setup for an HAProxy service used
 
 ## Configuration
 
-- **HAProxy Configuration**: Modify `haproxy.cfg` to update frontends, backends, and ACLs as needed.
 - **Environment Variables**: Update the `env` file to point to the correct database server and provide 1Password details.
 - **SSL Certificates**: Place `.pem` files in the `ssl/` directory for SSL termination.
 
