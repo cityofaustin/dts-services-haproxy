@@ -1,1 +1,4 @@
 DATABASE_SERVER=<hostname of the database server you want to expose on 5432>
+OP_API_TOKEN=
+OP_CONNECT=https://coa.1password.austinmobility.io
+OP_VAULT_ID=
