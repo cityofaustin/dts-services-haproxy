@@ -33,9 +33,6 @@ This repository contains the configuration and setup for an HAProxy service used
 
    ```env
    DATABASE_SERVER=<your-database-server>
-   OP_API_TOKEN=<your-1password-api-token>
-   OP_CONNECT=https://coa.1password.austinmobility.io
-   OP_VAULT_ID=<your-1password-vault-id>
    ```
 
 4. Start the HAProxy service using Docker Compose:
@@ -51,7 +48,8 @@ This repository contains the configuration and setup for an HAProxy service used
 
 ## Configuration
 
-- **Environment Variables**: Update the `env` file to point to the correct database server and provide 1Password details.
+- **HAProxy Configuration**: Modify `haproxy.cfg` to update frontends, backends, and ACLs as needed.
+- **Environment Variables**: Update the `env` file to point to the correct database server.
 - **SSL Certificates**: Place `.pem` files in the `ssl/` directory for SSL termination.
 
 ## Notes
