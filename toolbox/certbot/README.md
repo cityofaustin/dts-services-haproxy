@@ -8,6 +8,8 @@ This script is currently used for the following subdomains, but is not limited t
 
 - **atd-postgrest.austinmobility.io**
 - **equitytool.austinmobility.io**
+- **citybase-staging.austinmobility.io**
+- **citybase-uat.austinmobility.io**
 
 ## Usage
 
