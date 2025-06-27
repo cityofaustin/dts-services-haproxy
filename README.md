@@ -21,6 +21,7 @@ This repository contains the configuration and setup for an HAProxy service used
 ## Usage
 
 1. Clone the repository:
+
    ```bash
    git clone <repository-url>
    cd dts-services-haproxy
@@ -29,11 +30,13 @@ This repository contains the configuration and setup for an HAProxy service used
 2. Add your SSL certificates to the `ssl/` directory. Ensure they are named as `<fully qualified domain name>.pem`.
 
 3. Create an `env` file in the root directory with the following content:
+
    ```env
    DATABASE_SERVER=<your-database-server>
    ```
 
 4. Start the HAProxy service using Docker Compose:
+
    ```bash
    docker compose up -d
    ```
@@ -56,4 +59,4 @@ This repository contains the configuration and setup for an HAProxy service used
 
 ## License
 
-This code is licensed under the Unlicense. Please see: https://unlicense.org/. 
+This code is licensed under the Unlicense. Please see: https://unlicense.org/.
