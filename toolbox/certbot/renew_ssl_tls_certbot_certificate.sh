@@ -3,6 +3,12 @@
 # exit on error
 set -euo pipefail
 
+echo ""
+echo "----------------------------------------"
+echo "Script execution started at: $(date)"
+echo "Arguments provided: $@"
+echo "----------------------------------------"
+
 print_help() {
   cat <<EOF
 Usage: $0 -d <fully qualified domain> [-t <target_location>] [-c <container_name>]
