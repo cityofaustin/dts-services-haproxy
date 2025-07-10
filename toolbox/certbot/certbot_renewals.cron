@@ -1,5 +1,6 @@
 # Cron jobs for renewing SSL/TLS certificates using Certbot
-# NB: when symlinking this into `/etc/cron.d`, remember, files containing cron entries may NOT have a suffix.
+# NB: when symlinking this into `/etc/cron.d`, remember, filenames for files containing cron entries must NOT have a filename extension.
+# EX: `ln -s ./certbot_renewals.cron /etc/cron.d/certbot_renewals`
 
 0 7,19 * * 1-5 root cd /srv/dts-services-haproxy/toolbox/certbot/; ./renew_ssl_tls_certbot_certificate.sh -d atd-postgrest.austinmobility.io -t /srv/dts-services-haproxy/ssl -c haproxy >> /var/log/certbot-atd-postgrest.log 2>&1
 2 7,19 * * 1-5 root cd /srv/dts-services-haproxy/toolbox/certbot/; ./renew_ssl_tls_certbot_certificate.sh -d equitytool.austinmobility.io -t /srv/dts-services-haproxy/ssl -c haproxy >> /var/log/certbot-equitytool.log 2>&1
