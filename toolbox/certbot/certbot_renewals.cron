@@ -4,5 +4,6 @@
 
 0 7,19 * * 1-5 root cd /srv/dts-services-haproxy/toolbox/certbot/; ./renew_ssl_tls_certbot_certificate.sh -d atd-postgrest.austinmobility.io -t /srv/dts-services-haproxy/ssl -c haproxy >> /var/log/certbot-atd-postgrest.log 2>&1
 2 7,19 * * 1-5 root cd /srv/dts-services-haproxy/toolbox/certbot/; ./renew_ssl_tls_certbot_certificate.sh -d equitytool.austinmobility.io -t /srv/dts-services-haproxy/ssl -c haproxy >> /var/log/certbot-equitytool.log 2>&1
-4 7,19 * * 1-5 root /srv/dts-services-haproxy/toolbox/certbot/renew_ssl_tls_certbot_certificate.sh -d citybase-staging.austinmobility.io -t /srv/dts-services-haproxy/ssl -c haproxy >> /var/log/certbot-citybase-staging.log 2>&1
-6 7,19 * * 1-5 root /srv/dts-services-haproxy/toolbox/certbot/renew_ssl_tls_certbot_certificate.sh -d citybase-uat.austinmobility.io -t /srv/dts-services-haproxy/ssl -c haproxy >> /var/log/certbot-citybase-uat.log 2>&1
+4 7,19 * * 1-5 root cd /srv/dts-services-haproxy/toolbox/certbot/; ./renew_ssl_tls_certbot_certificate.sh -d citybase-staging.austinmobility.io -t /srv/dts-services-haproxy/ssl -c haproxy >> /var/log/certbot-citybase-staging.log 2>&1
+6 7,19 * * 1-5 root cd /srv/dts-services-haproxy/toolbox/certbot/; ./renew_ssl_tls_certbot_certificate.sh -d citybase-uat.austinmobility.io -t /srv/dts-services-haproxy/ssl -c haproxy >> /var/log/certbot-citybase-uat.log 2>&1
+8 7,19 * * 1-5 root cd /srv/dts-services-haproxy/toolbox/certbot/; ./renew_ssl_tls_certbot_certificate.sh -d citybase.austinmobility.io -t /srv/dts-services-haproxy/ssl -c haproxy >> /var/log/certbot-citybase-production.log 2>&1
