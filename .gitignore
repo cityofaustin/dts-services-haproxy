@@ -1,3 +1,5 @@
 .vscode
 ssl/*pem*
 env
+trusted_sources_internal.lst
+trusted_sources_citybase.lst

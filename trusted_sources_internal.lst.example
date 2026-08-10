@@ -1,0 +1,13 @@
+# Developers and city network — can reach all backends.
+# Copy to trusted_sources_internal.lst and replace with real values:
+#   cp trusted_sources_internal.lst.example trusted_sources_internal.lst
+#
+# One IP or CIDR per line. Lines starting with # are ignored.
+
+# Developer static IPs
+203.0.113.10
+203.0.113.11
+203.0.113.12
+
+# City / office network (class C example)
+162.89.100.0/24

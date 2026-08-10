@@ -1,0 +1,9 @@
+# Citybase source endpoints — can reach citybase backends only.
+# Copy to trusted_sources_citybase.lst and replace with real values:
+#   cp trusted_sources_citybase.lst.example trusted_sources_citybase.lst
+#
+# One IP or CIDR per line. Lines starting with # are ignored.
+
+198.51.100.1
+198.51.100.2
+198.51.100.3
