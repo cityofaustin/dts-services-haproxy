@@ -3,6 +3,10 @@
 #   cp trusted_sources_citybase.lst.example trusted_sources_citybase.lst
 #
 # One IP or CIDR per line. Lines starting with # are ignored.
+#
+# Keep in sync with 1Password Developer vault entry:
+#   "Bastion HAProxy Trusted Sources Citybase"
+# Changing this file on the bastion does not update 1Password, and vice versa.
 
 198.51.100.1
 198.51.100.2
