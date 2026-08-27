@@ -11,6 +11,8 @@ services:
     volumes:
       - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
       - ./ssl:/usr/local/etc/haproxy/ssl:ro
+      - ./trusted_sources_internal.lst:/usr/local/etc/haproxy/trusted_sources_internal.lst:ro
+      - ./trusted_sources_citybase.lst:/usr/local/etc/haproxy/trusted_sources_citybase.lst:ro
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped
